@@ -10,7 +10,7 @@ apt -y isntall hostapd dnsmasq php libapache2-mod-php
 cp start_hostapd.sh /usr/local/sbin
 chmod +x /usr/local/sbin/start_hostapd.sh
 
-cp autohostspot /etc/init.d
+cp autohotspot /etc/init.d
 chmod +x /etc/init.d/autohotspot
 
 # Copy web files from git:
