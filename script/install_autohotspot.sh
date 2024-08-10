@@ -5,7 +5,7 @@ if [ "$(id -u)" -ne 0 ]; then
    exit 1
 fi
 
-apt -y isntall hostapd dnsmasq php libapache2-mod-php
+apt -y install hostapd dnsmasq php libapache2-mod-php
 
 cp start_hostapd.sh /usr/local/sbin
 chmod +x /usr/local/sbin/start_hostapd.sh
