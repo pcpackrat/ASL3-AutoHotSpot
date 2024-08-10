@@ -31,11 +31,6 @@ www-data ALL=(ALL) NOPASSWD: /sbin/iwlist
 www-data ALL=(ALL) NOPASSWD: /usr/bin/nmcli
 www-data ALL=(ALL) NOPASSWD: /usr/sbin/reboot
 
-# Copy and make executable AutoAP components from git:
-cp ASL3-Mods/etc/init.d/autohotspot /etc/init.d/
-chmod +x /etc/init.d/autohotspot
-
-
 Copy hostapd.service from git:
 /usr/lib/systemd/system/hostapd.service
 
