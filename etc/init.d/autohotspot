@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ "$1" == "start" ]; then
+    # Assign a temporary IP address
+    ip address add 10.5.5.5/24 dev wlan0
+
+elif [ "$1" == "stop" ]; then
+    # Release the IP address
+    ip address del 10.5.5.5/24 dev wlan0
+
+else
+    echo "Usage: $0 [start|stop]"
+fi
