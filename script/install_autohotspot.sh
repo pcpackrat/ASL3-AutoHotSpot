@@ -123,7 +123,7 @@ NEW_RCLOCAL_ENTRY="/usr/local/sbin/start_hostapd.sh"
 TEMPFILE=$(mktemp)
 
 # Read the sudoers file and insert the new entries under the marker
-awk -v marker="$MARKERRC" -v entries="$NEW_RCLOCAL_ENTRIES" '
+awk -v marker="$MARKERRC" -v entries="$NEW_RCLOCAL_ENTRY" '
     $0 ~ marker {print; print entries; next} 1' /etc/rc.local > "$TEMPFILE"
 
 # write out to /etc/sudoers file
