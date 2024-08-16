@@ -10,4 +10,7 @@ cd ASL3-AutoHotSpot/script
 chmod +x install_autohotspot
 # run the script:
 ./install_autohotspot.sh
+# Notes
 The default wifi password is YourPassword and can be changed in the start_hostapd.sh file.
+
+If no access points show up, try power cycling the pi
