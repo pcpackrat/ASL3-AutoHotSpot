@@ -1,0 +1,12 @@
+[Unit]
+Description=Start Hostapd if Ethernet or Wi-Fi is Connected
+After=network.target
+
+[Service]
+ExecStartPre=/bin/sleep 10 
+ExecStart=/usr/local/sbin/start_hostapd.sh
+Type=oneshot
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

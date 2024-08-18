@@ -1,0 +1,9 @@
+#!/bin/bash
+
+INTERFACE=$1
+STATUS=$2
+
+if [ "$STATUS" = "up" ] && [ "$INTERFACE" = "eth0" ]; then
+    systemctl stop hostapd
+    systemctl stop dnsmasq
+fi
