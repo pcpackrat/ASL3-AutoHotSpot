@@ -59,23 +59,38 @@ cp dnsmasq.conf /etc
 /usr/bin/firewall-cmd --zone=allstarlink --add-service=dhcp --permanent
 
 # Modify 000-Default.conf
-MARKERWS="Include conf-available/serve-cgi-bin.conf"
+MARKERWS="</VirtualHost>"
 
 NEW_APACHE_ENTRIES=$(cat <<EOF
-RewriteEngine On
 
-# Redirect Apple devices for captive portal detection
-RewriteRule ^/hotspot-detect.html$ /wifisetup.py [L,R=302]
+<VirtualHost 10.5.5.5:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot/var/www/html
+        ErrorLog ${APACHE_LOG_DIR}/cgi_error.log
+        CustomLog ${APACHE_LOG_DIR}/cgi_access.log combined
+        RewriteEngine On
 
-# Redirect Android devices for captive portal detection
-RewriteRule ^/generate_204$ /wifisetup.py [L,R=302]
+        # Redirect Apple devices for captive portal detection
+        RewriteRule ^/hotspot-detect.html$ /wifisetup.py [L,R=302]
 
-# Redirect Windows devices for captive portal detection
-RewriteRule ^/ncsi.txt$ /wifisetup.py [L,R=302]
+        # Redirect Android devices for captive portal detection
+        RewriteRule ^/generate_204$ /wifisetup.py [L,R=302]
 
-# Redirect Windows devices for captive portal detection
-RewriteRule ^/connectiontest.txt$ /wifisetup.py [L,R=302]
+        # Redirect Windows devices for captive portal detection
+        RewriteRule ^/ncsi.txt$ /wifisetup.py [L,R=302]
 
+        # Redirect Windows devices for captive portal detection
+        RewriteRule ^/connectiontest.txt$ /wifisetup.py [L,R=302]
+
+        ScriptAlias /cgi-bin/ /var/www/autohotspot/
+        <Directory "/var/www/autohotspot/">
+            AllowOverride None
+            Options +ExecCGI
+            AddHandler cgi-script .py
+            Require all granted
+        </Directory>
+
+</VirtualHost>
 EOF
 )
 
