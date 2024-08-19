@@ -65,7 +65,7 @@ NEW_APACHE_ENTRIES=$(cat <<EOF
 
 <VirtualHost 10.5.5.5:80>
         ServerAdmin webmaster@localhost
-        DocumentRoot/var/www/html
+        DocumentRoot /var/www/html
         ErrorLog ${APACHE_LOG_DIR}/cgi_error.log
         CustomLog ${APACHE_LOG_DIR}/cgi_access.log combined
         RewriteEngine On
