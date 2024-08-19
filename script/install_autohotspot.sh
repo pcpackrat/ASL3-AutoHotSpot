@@ -17,9 +17,7 @@ cp 99-killhostapd-eth_up /etc/NetworkManager/dispatcher.d
 chmod +x /etc/NetworkManager/dispatcher.d/99-killhostapd-eth_up
 
 # Copy web files from git:
-cp create_config.php /var/www/html
-cp logon.php /var/www/html
-cp scan_wifi.py /var/www/html
+cp wifisetup.py /var/www/cgi-bin
 
 # Allow www-data to access network devices:
 usermod -aG netdev www-data
@@ -67,16 +65,16 @@ NEW_APACHE_ENTRIES=$(cat <<EOF
 RewriteEngine On
 
 # Redirect Apple devices for captive portal detection
-RewriteRule ^/hotspot-detect.html$ /logon.php [L,R=302]
+RewriteRule ^/hotspot-detect.html$ /wifisetup.py [L,R=302]
 
 # Redirect Android devices for captive portal detection
-RewriteRule ^/generate_204$ /logon.php [L,R=302]
+RewriteRule ^/generate_204$ /wifisetup.py [L,R=302]
 
 # Redirect Windows devices for captive portal detection
-RewriteRule ^/ncsi.txt$ /logon.php [L,R=302]
+RewriteRule ^/ncsi.txt$ /wifisetup.py [L,R=302]
 
 # Redirect Windows devices for captive portal detection
-RewriteRule ^/connectiontest.txt$ /logon.php [L,R=302]
+RewriteRule ^/connectiontest.txt$ /wifisetup.py [L,R=302]
 
 EOF
 )
