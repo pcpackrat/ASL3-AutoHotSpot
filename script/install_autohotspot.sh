@@ -20,6 +20,9 @@ chmod +x /etc/NetworkManager/dispatcher.d/99-killhostapd-eth_up
 cp wifisetup.py /var/www/autohotspot
 chmod +x /var/www/autohotspot/wifisetup.py
 
+# Enable cgid module for apache
+a2enmod cgid
+
 # Allow www-data to access network devices:
 usermod -aG netdev www-data
 
