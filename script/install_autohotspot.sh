@@ -72,16 +72,16 @@ NEW_APACHE_ENTRIES=$(cat <<EOF
         RewriteEngine On
 
         # Redirect Apple devices for captive portal detection
-        RewriteRule ^/hotspot-detect.html$ /wifisetup.py [L,R=302]
+        RewriteRule ^/hotspot-detect.html$ /cgi-bin/wifisetup.py [L,R=302]
 
         # Redirect Android devices for captive portal detection
-        RewriteRule ^/generate_204$ /wifisetup.py [L,R=302]
+        RewriteRule ^/generate_204$ /cgi-bin/wifisetup.py [L,R=302]
 
         # Redirect Windows devices for captive portal detection
-        RewriteRule ^/ncsi.txt$ /wifisetup.py [L,R=302]
+        RewriteRule ^/ncsi.txt$ /cgi-bin/wifisetup.py [L,R=302]
 
         # Redirect Windows devices for captive portal detection
-        RewriteRule ^/connectiontest.txt$ /wifisetup.py [L,R=302]
+        RewriteRule ^/connectiontest.txt$ /cgi-bin/wifisetup.py [L,R=302]
 
         ScriptAlias /cgi-bin/ /var/www/autohotspot/
         <Directory "/var/www/autohotspot/">
