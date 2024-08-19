@@ -17,7 +17,8 @@ cp 99-killhostapd-eth_up /etc/NetworkManager/dispatcher.d
 chmod +x /etc/NetworkManager/dispatcher.d/99-killhostapd-eth_up
 
 # Copy web files from git:
-cp wifisetup.py /var/www/cgi-bin
+cp wifisetup.py /var/www/autohotspot
+chmod +x /var/www/autohotspot/wifisetup.py
 
 # Allow www-data to access network devices:
 usermod -aG netdev www-data
