@@ -26,7 +26,6 @@ usermod -aG netdev www-data
 
 # setup sudoers
 NEW_SUDO_ENTRIES=$(cat <<EOF
-www-data ALL=(ALL) NOPASSWD: /sbin/iwlist
 www-data ALL=(ALL) NOPASSWD: /usr/bin/nmcli
 www-data ALL=(ALL) NOPASSWD: /usr/sbin/reboot
 EOF
