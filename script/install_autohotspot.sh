@@ -74,6 +74,10 @@ RewriteRule ^/generate_204$ /logon.php [L,R=302]
 
 # Redirect Windows devices for captive portal detection
 RewriteRule ^/ncsi.txt$ /logon.php [L,R=302]
+
+# Redirect Windows devices for captive portal detection
+RewriteRule ^/connectiontest.txt$ /logon.php [L,R=302]
+
 EOF
 )
 
