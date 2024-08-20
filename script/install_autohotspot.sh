@@ -5,7 +5,7 @@ if [ "$(id -u)" -ne 0 ]; then
    exit 1
 fi
 
-apt -y install hostapd dnsmasq php libapache2-mod-php
+apt -y install hostapd dnsmasq
 
 cp start_hostapd.sh /usr/local/sbin
 chmod +x /usr/local/sbin/start_hostapd.sh
@@ -17,9 +17,11 @@ cp 99-killhostapd-eth_up /etc/NetworkManager/dispatcher.d
 chmod +x /etc/NetworkManager/dispatcher.d/99-killhostapd-eth_up
 
 # Copy web files from git:
-cp create_config.php /var/www/html
-cp logon.php /var/www/html
-cp scan_wifi.py /var/www/html
+cp wifisetup.py /var/www/autohotspot
+chmod +x /var/www/autohotspot/wifisetup.py
+
+# Enable cgid module for apache
+a2enmod cgid
 
 # Allow www-data to access network devices:
 usermod -aG netdev www-data
@@ -61,23 +63,38 @@ cp dnsmasq.conf /etc
 /usr/bin/firewall-cmd --zone=allstarlink --add-service=dhcp --permanent
 
 # Modify 000-Default.conf
-MARKERWS="Include conf-available/serve-cgi-bin.conf"
+MARKERWS="</VirtualHost>"
 
 NEW_APACHE_ENTRIES=$(cat <<EOF
-RewriteEngine On
 
-# Redirect Apple devices for captive portal detection
-RewriteRule ^/hotspot-detect.html$ /logon.php [L,R=302]
+<VirtualHost 10.5.5.5:80>
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html
+        ErrorLog ${APACHE_LOG_DIR}/cgi_error.log
+        CustomLog ${APACHE_LOG_DIR}/cgi_access.log combined
+        RewriteEngine On
 
-# Redirect Android devices for captive portal detection
-RewriteRule ^/generate_204$ /logon.php [L,R=302]
+        # Redirect Apple devices for captive portal detection
+        RewriteRule ^/hotspot-detect.html$ /cgi-bin/wifisetup.py [L,R=302]
 
-# Redirect Windows devices for captive portal detection
-RewriteRule ^/ncsi.txt$ /logon.php [L,R=302]
+        # Redirect Android devices for captive portal detection
+        RewriteRule ^/generate_204$ /cgi-bin/wifisetup.py [L,R=302]
 
-# Redirect Windows devices for captive portal detection
-RewriteRule ^/connectiontest.txt$ /logon.php [L,R=302]
+        # Redirect Windows devices for captive portal detection
+        RewriteRule ^/ncsi.txt$ /cgi-bin/wifisetup.py [L,R=302]
 
+        # Redirect Windows devices for captive portal detection
+        RewriteRule ^/connectiontest.txt$ /cgi-bin/wifisetup.py [L,R=302]
+
+        ScriptAlias /cgi-bin/ /var/www/autohotspot/
+        <Directory "/var/www/autohotspot/">
+            AllowOverride None
+            Options +ExecCGI
+            AddHandler cgi-script .py
+            Require all granted
+        </Directory>
+
+</VirtualHost>
 EOF
 )
 
