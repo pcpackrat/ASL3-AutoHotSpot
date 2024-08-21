@@ -23,9 +23,6 @@ chmod +x /var/www/autohotspot/wifisetup.py
 # Enable cgid module for apache
 a2enmod cgid
 
-# Allow www-data to access network devices:
-usermod -aG netdev www-data
-
 # setup sudoers
 NEW_SUDO_ENTRIES=$(cat <<EOF
 www-data ALL=(ALL) NOPASSWD: /usr/bin/nmcli
