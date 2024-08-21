@@ -13,17 +13,18 @@ chmod +x /usr/local/sbin/start_hostapd.sh
 cp autohotspot.service /etc/systemd/system
 systemctl enable autohotspot.service
 
+# This kills the hostapd and dnsmasq services when ethernet is connected
 cp 99-killhostapd-eth_up /etc/NetworkManager/dispatcher.d
 chmod +x /etc/NetworkManager/dispatcher.d/99-killhostapd-eth_up
 
-# Copy web files from git:
+# Copy web files
 cp wifisetup.py /var/www/autohotspot
 chmod +x /var/www/autohotspot/wifisetup.py
 
 # Enable cgid module for apache
 a2enmod cgid
 
-# setup sudoers
+# setup sudoers so www-data can set the WiFi and reboot the pi
 NEW_SUDO_ENTRIES=$(cat <<EOF
 www-data ALL=(ALL) NOPASSWD: /usr/bin/nmcli
 www-data ALL=(ALL) NOPASSWD: /usr/sbin/reboot
@@ -46,20 +47,22 @@ rm "$TEMPFILE"
 # Copy service files
 cp hostapd.service /usr/lib/systemd/system/hostapd.service
 cp autohotspot.service /etc/systemd/system/autohotspot.service
+
+# Enable autohostspot service.  This launches the start_hostapd.sh file at boot
 systemctl enable autohotspot.service
 
 # unmask and disable hostapd.service
 systemctl unmask hostapd.service
 systemctl disable hostapd.service
 
-# copy dnsmasq.conf from git
+# copy dnsmasq.conf - This is for redirecting devices to the wifi sign-on page and handing out IPs
 cp dnsmasq.conf /etc
 
 # Open Firewall for DHCP and DNS
 /usr/bin/firewall-cmd --zone=allstarlink --add-service=dns --permanent
 /usr/bin/firewall-cmd --zone=allstarlink --add-service=dhcp --permanent
 
-# Modify 000-Default.conf
+# Modify 000-Default.conf so the redirects go to the wifiscan.py and only work from hotspot connected devices - no Internet
 MARKERWS="</VirtualHost>"
 
 NEW_APACHE_ENTRIES=$(cat <<EOF
@@ -102,7 +105,7 @@ awk -v marker="$MARKERWS" -v entries="$NEW_APACHE_ENTRIES" '
 
 mv "$TEMPFILE" /etc/apache2/sites-available/000-default.conf
 
-# Modify apache2.conf
+# Modify apache2.conf - more changes needed for this to work
 # Define the file to be modified
 CONFIG_FILE="/etc/apache2/apache2.conf"
 
