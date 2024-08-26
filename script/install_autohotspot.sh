@@ -18,7 +18,8 @@ cp 99-killhostapd-eth_up /etc/NetworkManager/dispatcher.d
 chmod +x /etc/NetworkManager/dispatcher.d/99-killhostapd-eth_up
 
 # Copy web files
-cp wifisetup.py /var/www/autohotspot
+mkdir /var/www/autohotspot
+cp wifisetup.py /var/www/autohotspot/wifisetup.py
 chmod +x /var/www/autohotspot/wifisetup.py
 
 # Enable cgid module for apache
