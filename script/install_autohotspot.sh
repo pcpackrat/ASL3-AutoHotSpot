@@ -17,6 +17,9 @@ systemctl enable autohotspot.service
 cp 99-killhostapd-eth_up /etc/NetworkManager/dispatcher.d
 chmod +x /etc/NetworkManager/dispatcher.d/99-killhostapd-eth_up
 
+# Copy audio file to custom sounds directory
+cp wifi-disconnected.ulaw /usr/share/asterisk/sounds/custom/
+
 # Copy web files
 mkdir /var/www/autohotspot
 cp wifisetup.py /var/www/autohotspot/wifisetup.py
