@@ -1,8 +1,7 @@
 #!/bin/bash
 
-# Generate the SSID based on the MAC address of wlan0
-MAC_ADDRESS=$(cat /sys/class/net/wlan0/address | sed 's/://g')
-SSID="ASL3_${MAC_ADDRESS}"
+# Generate the SSID based on the hostname
+SSID="ASL3_${HOSTNAME}"
 
 # Ethernet and Wi-Fi interfaces to check
 ETH_INTERFACE="eth0"
