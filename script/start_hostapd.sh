@@ -29,9 +29,16 @@ ETH_CONNECTED=$(cat /sys/class/net/$ETH_INTERFACE/carrier 2>/dev/null)
 # Check if wlan0 is connected to a network
 WIFI_CONNECTED=$(iw dev $WIFI_INTERFACE link | grep "Connected")
 
+# Path to the rpt_http_registrations.conf file
+CONF_FILE="/etc/asterisk/rpt_http_registrations.conf"
+
+# Extract the number from http registration file
+NODENUM=$(grep '^register =>' "$CONF_FILE" | sed -n 's/^register =>\s*\([0-9]*\):.*/\1/p')
+
 # Start hostapd if either Ethernet or Wi-Fi is connected
 if [[ "$ETH_CONNECTED" -eq 0 ]] && [[ -z "$WIFI_CONNECTED" ]]; then
     systemctl start hostapd
+     asterisk -rx "rpt localplay $NODENUM /usr/share/asterisk/sounds/custom/wifi-disconnected"
 else
     systemctl stop dnsmasq
 fi
