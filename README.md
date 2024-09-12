@@ -1,4 +1,4 @@
-# Apple Users !!!  This is not handling apostrophes in the SSID. You will need to rename your device. Also turn on Maximize Compatibility for your hotspot.
+# Apple Users !!!  This is not handling apostrophes in the SSID. You will need to rename your device. Also turn on Maximize Compatibility for your hotspot. Also Apple is problematic for having the personal hotspot on and trying to connect to another wifi. It will disable the hotspot as you connect to asl3 node and the captive portal page does not allow you to swipe from the top to turn the hotspot on again. Weeeeeeeee
 
 Open Settings -> Tap General -> Scroll down and tap About -> Tap your device name -> Enter new name without special chars
 
