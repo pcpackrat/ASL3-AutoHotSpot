@@ -1,3 +1,11 @@
+# Apple Users !!!  This is not handling apostrophes in the SSID. You will need to rename you device 
+
+Open Settings
+Tap General
+Scroll down and tap About
+Tap next to your device name to clear the text
+Enter your new name
+
 # sudo into a root shell
 sudo su
 # install git
