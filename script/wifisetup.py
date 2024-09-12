@@ -8,7 +8,6 @@ import html
 # Function to replace the specific escape sequences with their respective characters
 def clean_ssid(ssid):
     ssid = ssid.replace("\\xE2\\x80\\x99", " WILL NOT WORK WITH APOSTROPHE ")  # Replace specific hex code for apostrophe
-    ssid = ssid.replace("\\x20", " ")  # Replace hex code for space
     return ssid
 
 def scan_wifi_networks():
