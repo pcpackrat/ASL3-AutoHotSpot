@@ -1,10 +1,6 @@
-# Apple Users !!!  This is not handling apostrophes in the SSID. You will need to rename you device 
+# Apple Users !!!  This is not handling apostrophes in the SSID. You will need to rename your device 
 
-Open Settings
-Tap General
-Scroll down and tap About
-Tap next to your device name to clear the text
-Enter your new name
+Open Settings -> Tap General -> Scroll down and tap About -> Tap your device name -> Enter new name without special chars
 
 # sudo into a root shell
 sudo su
