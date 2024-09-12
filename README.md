@@ -1,4 +1,4 @@
-# Apple Users !!!  This is not handling apostrophes in the SSID. You will need to rename your device 
+# Apple Users !!!  This is not handling apostrophes in the SSID. You will need to rename your device. Also turn on Maximize Compatibility for your hotspot.
 
 Open Settings -> Tap General -> Scroll down and tap About -> Tap your device name -> Enter new name without special chars
 
