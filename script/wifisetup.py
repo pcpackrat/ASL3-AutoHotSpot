@@ -5,6 +5,12 @@ import subprocess
 import json
 import html
 
+# Function to replace the specific escape sequences with their respective characters
+def clean_ssid(ssid):
+    ssid = ssid.replace("\\xE2\\x80\\x99", " WILL NOT WORK WITH APOSTROPHE ")  # Replace specific hex code for apostrophe
+    ssid = ssid.replace("\\x20", " ")  # Replace hex code for space
+    return ssid
+
 def scan_wifi_networks():
     try:
         result = subprocess.run(["iwlist", "scan"], capture_output=True, text=True, check=True)
@@ -19,6 +25,7 @@ def scan_wifi_networks():
             line = line.strip()
             if line.startswith("ESSID:"):
                 ssid = line.split(":")[1].strip().strip('"')
+                ssid = clean_ssid(ssid)  # Clean the SSID to replace escape sequences
             elif "Quality=" in line and "Signal level=" in line:
                 quality_parts = line.split(" ")[0].split("=")[1].split("/")
                 quality = int(quality_parts[0])
@@ -35,6 +42,7 @@ def scan_wifi_networks():
         return {"error": f"Command failed: {str(e)}"}
     except Exception as e:
         return {"error": str(e)}
+
 
 def generate_html_form(wifi_networks):
     unique_networks = {}
